@@ -17,7 +17,7 @@ async function fetchRosters() {
   try {
     const responseData = await sendHttpRequest(
       'GET',
-      'https://statsapi.web.nhl.com/api/v1/teams/28/roster',
+      'https://statsapi.web.nhl.com/api/v1/teams/28/roster', //need to make the 28 dynamic to get all teams
     );
     const teamData = responseData;
     console.log(teamData.roster);

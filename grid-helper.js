@@ -1,15 +1,15 @@
 // specify the columns
 const columnDefs = [
   { headerName: 'Player Name', field: 'playerName', sortable: true, filter: true },
-  { headerName: 'GP', field: 'gamesPlayed', sortable: true, filter: true },
-  { headerName: 'G', field: 'goals', sortable: true, filter: true },
-  { headerName: 'A', field: 'assists', sortable: true, filter: true },
-  { headerName: 'P', field: 'points', sortable: true, filter: true },
-  { headerName: '+/-', field: 'plusMinus', sortable: true, filter: true },
-  { headerName: 'PPP', field: 'ppp', sortable: true, filter: true },
-  { headerName: 'SOG', field: 'sog', sortable: true, filter: true },
-  { headerName: 'Hits', field: 'hits', sortable: true, filter: true },
-  { headerName: 'ToI', field: 'toi', sortable: true, filter: true },
+  { headerName: 'GP', field: 'gamesPlayed', sortable: true, filter: true, width: 100 },
+  { headerName: 'G', field: 'goals', sortable: true, filter: true, width: 100 },
+  { headerName: 'A', field: 'assists', sortable: true, filter: true, width: 100 },
+  { headerName: 'P', field: 'points', sortable: true, filter: true, width: 100 },
+  { headerName: '+/-', field: 'plusMinus', sortable: true, filter: true, width: 100 },
+  { headerName: 'PPP', field: 'ppp', sortable: true, filter: true, width: 100 },
+  { headerName: 'SOG', field: 'sog', sortable: true, filter: true, width: 100 },
+  { headerName: 'Hits', field: 'hits', sortable: true, filter: true, width: 100 },
+  { headerName: 'ToI', field: 'toi', sortable: true, filter: true, width: 100 },
 ];
 
 // specify the data
