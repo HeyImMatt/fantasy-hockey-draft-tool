@@ -20,7 +20,6 @@ async function fetchRosters() {
       `https://statsapi.web.nhl.com/api/v1/teams/${nhlTeams[25].id}/roster`, //need to make the 28 dynamic to get all teams
     );
     const teamData = responseData;
-    console.log(teamData.roster);
     for (const player of teamData.roster) {
       if (
         player.position.type === 'Forward' ||
@@ -48,7 +47,6 @@ async function fetchPlayerStats(playerName, team, pos, id) {
     );
     const data = responseData;
     const playerStats = data.stats[0].splits[0].stat;
-    console.log(playerStats);
     rowData.push({
       playerName: playerName,
       position: pos,
