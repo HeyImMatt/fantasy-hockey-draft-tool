@@ -17,7 +17,7 @@ async function fetchRosters() {
   try {
     const responseData = await sendHttpRequest(
       'GET',
-      'https://statsapi.web.nhl.com/api/v1/teams/28/roster', //need to make the 28 dynamic to get all teams
+      `https://statsapi.web.nhl.com/api/v1/teams/${nhlTeams[25].id}/roster`, //need to make the 28 dynamic to get all teams
     );
     const teamData = responseData;
     console.log(teamData.roster);
@@ -26,7 +26,12 @@ async function fetchRosters() {
         player.position.type === 'Forward' ||
         player.position.type === 'Defenseman'
       )
-        await fetchPlayerStats(player.person.fullName, player.person.id);
+        await fetchPlayerStats(
+          player.person.fullName,
+          nhlTeams[25].team,
+          player.position.abbreviation,
+          player.person.id,
+        );
     }
   } catch (error) {
     alert(error.message);
@@ -35,7 +40,7 @@ async function fetchRosters() {
 
 // https://statsapi.web.nhl.com/api/v1/people/8476459/stats?stats=statsSingleSeason&season=20182019
 
-async function fetchPlayerStats(playerName, id) {
+async function fetchPlayerStats(playerName, team, pos, id) {
   try {
     const responseData = await sendHttpRequest(
       'GET',
@@ -46,6 +51,8 @@ async function fetchPlayerStats(playerName, id) {
     console.log(playerStats);
     rowData.push({
       playerName: playerName,
+      position: pos,
+      team: team,
       gamesPlayed: playerStats.games,
       goals: playerStats.goals,
       assists: playerStats.assists,
@@ -54,6 +61,7 @@ async function fetchPlayerStats(playerName, id) {
       ppp: playerStats.powerPlayPoints,
       sog: playerStats.shots,
       hits: playerStats.hits,
+      toipg: playerStats.timeOnIcePerGame,
       toi: playerStats.timeOnIce,
     });
   } catch (error) {
