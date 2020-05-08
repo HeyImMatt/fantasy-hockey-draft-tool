@@ -7,7 +7,7 @@ function sendHttpRequest(method, url) {
     } else {
       return response.json().then((errData) => {
         console.log(errData);
-        throw new Error('something went wrong');
+        throw new Error(errData);
       });
     }
   });
@@ -46,21 +46,32 @@ async function fetchPlayerStats(playerName, team, pos, id) {
       `https://statsapi.web.nhl.com/api/v1/people/${id}/stats?stats=statsSingleSeason&season=20192020`,
     );
     const data = responseData;
-    const playerStats = data.stats[0].splits[0].stat;
+    const {
+      games,
+      goals,
+      assists,
+      points,
+      plusMinus,
+      powerPlayPoints,
+      shots,
+      hits,
+      timeOnIcePerGame,
+      timeOnIce,
+    } = data.stats[0].splits[0].stat;
     rowData.push({
       playerName: playerName,
       position: pos,
       team: team,
-      gamesPlayed: playerStats.games,
-      goals: playerStats.goals,
-      assists: playerStats.assists,
-      points: playerStats.points,
-      plusMinus: playerStats.plusMinus,
-      ppp: playerStats.powerPlayPoints,
-      sog: playerStats.shots,
-      hits: playerStats.hits,
-      toipg: playerStats.timeOnIcePerGame,
-      toi: playerStats.timeOnIce,
+      gamesPlayed: games,
+      goals: goals,
+      assists: assists,
+      points: points,
+      plusMinus: plusMinus,
+      ppp: powerPlayPoints,
+      sog: shots,
+      hits: hits,
+      toipg: timeOnIcePerGame,
+      toi: timeOnIce,
     });
   } catch (error) {
     alert(error.message);
