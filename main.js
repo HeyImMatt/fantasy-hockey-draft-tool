@@ -1,3 +1,7 @@
+let fileName = {
+  fileName: '20192020.csv',
+};
+
 function sendHttpRequest(method, url) {
   return fetch(url, {
     method: method,
@@ -13,13 +17,14 @@ function sendHttpRequest(method, url) {
   });
 }
 
-async function fetchRosters() {
+async function fetchRosters(nhlTeam) {
   try {
     const responseData = await sendHttpRequest(
       'GET',
-      `https://statsapi.web.nhl.com/api/v1/teams/${nhlTeams[25].id}/roster`, //need to make the 28 dynamic to get all teams
+      `https://statsapi.web.nhl.com/api/v1/teams/${nhlTeam.id}/roster`,
     );
     const teamData = responseData;
+    console.log(teamData);
     for (const player of teamData.roster) {
       if (
         player.position.type === 'Forward' ||
@@ -27,17 +32,15 @@ async function fetchRosters() {
       )
         await fetchPlayerStats(
           player.person.fullName,
-          nhlTeams[25].team,
+          nhlTeam.team,
           player.position.abbreviation,
           player.person.id,
         );
     }
   } catch (error) {
-    alert(error.message);
+    console.log(`fetchRosters ${error.message}`);
   }
 }
-
-// https://statsapi.web.nhl.com/api/v1/people/8476459/stats?stats=statsSingleSeason&season=20182019
 
 async function fetchPlayerStats(playerName, team, pos, id) {
   try {
@@ -74,10 +77,19 @@ async function fetchPlayerStats(playerName, team, pos, id) {
       toi: timeOnIce,
     });
   } catch (error) {
-    alert(error.message);
+    console.log(`fetchPlayerStats ${error.message} ${team} ${playerName} ${id} has no stats`);
   }
 }
 
-fetchRosters().then(() => {
-  gridOptions.api.setRowData(rowData);
+nhlTeams.forEach((nhlTeam) => {
+  new Promise(function (resolve, reject) {
+    resolve(fetchRosters(nhlTeam));
+    reject(console.log(error));
+  }).then(() => {
+    gridOptions.api.setRowData(rowData);
+  });
+});
+
+document.querySelector('button').addEventListener('click', () => {
+  gridOptions.api.exportDataAsCsv(fileName);
 });
