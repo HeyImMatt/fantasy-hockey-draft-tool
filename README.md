@@ -38,7 +38,7 @@ Via command line:
 ```
 $ git clone https://github.com/HeyImMatt/fantasy-hockey-draft-tool.git
 
-$ cd programming-language-suggester
+$ cd fantasy-hockey-draft-tool
 
 $ code .
 
